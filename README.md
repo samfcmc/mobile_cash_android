@@ -22,7 +22,7 @@ Using Android x86
 - You can run the project in an Android x86 virtual machine
 	1- Check ip address of the virtual machine
 	2- Do
-<code> adb connect <ip of Android x86> </code>
+<code> adb connect ip_of_Android_x86 </code>
 	3- Now you can deploy and run the application as described above
 
 Have fun ;)
