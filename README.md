@@ -26,4 +26,26 @@ Using Android x86
 <code> adb connect ip_of_Android_x86 </code>
 	3- Now you can deploy and run the application as described above
 
+
+In case of error when building the project with Maven, if you receive the MojoException : Could not find the path
+to Android SDK then:
+
+- Create a file settings.xml in ${HOME}/.m2 directory 
+- Add this code into the file :
+<code>
+  <settings> 
+   <profiles>
+      <profile>
+        <id>android-settings</id>
+        <praoperties>
+            <android.sdk.path>/path/to/android/sdk</android.sdk.path>
+        </properties>
+      </profile>
+     </profiles>
+     <activeProfiles>
+        <activeProfile>android-settings</activeProfile>
+     </activeProfiles>
+  </settings>}
+</code> 
+
 Have fun ;)
