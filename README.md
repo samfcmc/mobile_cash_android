@@ -3,6 +3,7 @@ mobile_cash_android
 
 Prerequisites:
 - Android SDK;
+- Android SDK Platform API 19
 - Maven
 - Eclipse
 - Android x86 Virtual Machine (optional)
