@@ -32,7 +32,7 @@ to Android SDK then:
 
 - Create a file settings.xml in ${HOME}/.m2 directory 
 - Add this code into the file :
-<code>
+<myxml>
   <settings> 
      <profiles>
      	 <profile>
@@ -46,6 +46,6 @@ to Android SDK then:
         <activeProfile>android-settings</activeProfile>
      </activeProfiles>
   </settings>
-</code> 
+</myxml> 
 
 Have fun ;)
