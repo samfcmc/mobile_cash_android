@@ -34,10 +34,10 @@ to Android SDK then:
 - Add this code into the file :
 <code>
   <settings> 
-   <profiles>
-      <profile>
-        <id>android-settings</id>
-        <praoperties>
+     <profiles>
+     	 <profile>
+           <id>android-settings</id>
+           <praoperties>
             <android.sdk.path>/path/to/android/sdk</android.sdk.path>
         </properties>
       </profile>
@@ -45,7 +45,7 @@ to Android SDK then:
      <activeProfiles>
         <activeProfile>android-settings</activeProfile>
      </activeProfiles>
-  </settings>}
+  </settings>
 </code> 
 
 Have fun ;)
