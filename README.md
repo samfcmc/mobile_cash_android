@@ -31,21 +31,7 @@ In case of error when building the project with Maven, if you receive the MojoEx
 to Android SDK then:
 
 - Create a file settings.xml in ${HOME}/.m2 directory 
-- Add this code into the file :
-<myxml>
-  <settings> 
-     <profiles>
-     	 <profile>
-           <id>android-settings</id>
-           <praoperties>
-            <android.sdk.path>/path/to/android/sdk</android.sdk.path>
-        </properties>
-      </profile>
-     </profiles>
-     <activeProfiles>
-        <activeProfile>android-settings</activeProfile>
-     </activeProfiles>
-  </settings>
-</myxml> 
+- Add this xml code that is mentioned in this link:
+  http://stackoverflow.com/questions/19133913/maven-android-pluginno-android-sdk-path-could-be-found
 
 Have fun ;)
