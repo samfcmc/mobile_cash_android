@@ -7,11 +7,6 @@
   <name>MobileCash</name>
 
 	<dependencies>
-	    <dependency>
-  			<groupId>com.ning</groupId>
-  			<artifactId>async-http-client</artifactId>
-  			<version>1.7.21</version>
-		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>

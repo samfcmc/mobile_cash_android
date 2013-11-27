@@ -1,10 +1,6 @@
 package com.sirs.mobilecashandroid;
 
 import java.io.IOException;
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.AsyncHttpClient.BoundRequestBuilder;
-import com.ning.http.client.Response;
 
 import comsirs.mobilecashandroid.R;
 
@@ -25,21 +21,9 @@ public class MainActivity<T> extends Activity {
 	private EditText passwd;
 	private EditText product;
 	private TextView responseTxt;
-	private AsyncHttpClient client;
 	
 	private void buyProduct() throws IOException {
-		client = new AsyncHttpClient();
-		BoundRequestBuilder r = client.preparePost("http://mobilecashserver.herokuapp.com/api/buy");
-		r.setBody("{\"username\" : \"samuelcoelho\", \"password\" : \"ist169350\", \"product\" : \"coca-cola\"}");
-		r.addHeader("Content-type", "application/json");
-		r.execute(new AsyncCompletionHandler<Response>() {
 
-			@Override
-			public Response onCompleted(Response response) throws Exception {
-				responseTxt.setText(response.getResponseBody());
-				return response;
-			}
-		});
 	}
 	
 	
