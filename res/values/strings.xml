@@ -5,6 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="submit_button">Buy</string>
-    
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="product_hint">Product Code</string>
+        
 
 </resources>
