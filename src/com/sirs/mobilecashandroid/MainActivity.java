@@ -1,19 +1,16 @@
 package com.sirs.mobilecashandroid;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import comsirs.mobilecashandroid.R;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +25,9 @@ public class MainActivity<T> extends Activity {
 	private EditText passwd;
 	private EditText product;
 	private TextView responseTxt;
+	private MobileCashServerAPI api;
 	
-	private void buyProduct() throws IOException, JSONException {
-		AsyncHttpClient client = new AsyncHttpClient();
+	private void buyProduct() throws IOException, JSONException, NoSuchAlgorithmException {
 		
 		String username = userName.getText().toString();
 		String password = passwd.getText().toString();
@@ -40,25 +37,14 @@ public class MainActivity<T> extends Activity {
         jsonParams.put("username", username);
         jsonParams.put("password", password);
         jsonParams.put("product", productCode);
-        StringEntity entity = new StringEntity(jsonParams.toString());
-        String url = "http://mobilecashserver.herokuapp.com/api/buy";
-        client.post(getApplicationContext(), url, entity, "application/json", new AsyncHttpResponseHandler() {
-        	@Override
+        
+        api.buy(getApplicationContext(), username, password, productCode, new AsyncHttpResponseHandler() {
         	public void onSuccess(String response) {
-        		try {
-					JSONObject object = new JSONObject(response);
-					responseTxt.setText("You have bougth a " + object.getString("product") + " and you have " + object.getString("balance"));
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					try {
-						JSONObject object = new JSONObject(response);
-						responseTxt.setText(object.getString("message"));
-					} catch (JSONException e1) {
-						responseTxt.setText("FATAL ERROR!!");
-					}
-				}
-        		
+        		responseTxt.setText(response);
+        	}
+        	
+        	public void onFailure(Throwable error) {
+        		responseTxt.setText(error.getMessage());
         	}
         });
 	}
@@ -83,6 +69,9 @@ public class MainActivity<T> extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -92,6 +81,7 @@ public class MainActivity<T> extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initViews();
+		api = MobileCashServerAPI.getInstance();
 	}
 
 	@Override
