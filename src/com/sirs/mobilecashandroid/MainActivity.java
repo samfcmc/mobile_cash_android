@@ -1,10 +1,16 @@
 package com.sirs.mobilecashandroid;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -27,16 +33,11 @@ public class MainActivity<T> extends Activity {
 	private TextView responseTxt;
 	private MobileCashServerAPI api;
 	
-	private void buyProduct() throws IOException, JSONException, NoSuchAlgorithmException {
+	private void buyProduct() throws IOException, JSONException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
 		
 		String username = userName.getText().toString();
 		String password = passwd.getText().toString();
 		String productCode = product.getText().toString();
-		
-		JSONObject jsonParams = new JSONObject();
-        jsonParams.put("username", username);
-        jsonParams.put("password", password);
-        jsonParams.put("product", productCode);
         
         api.buy(getApplicationContext(), username, password, productCode, new AsyncHttpResponseHandler() {
         	public void onSuccess(String response) {
@@ -81,7 +82,12 @@ public class MainActivity<T> extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initViews();
-		api = MobileCashServerAPI.getInstance();
+		try {
+			api = MobileCashServerAPI.getInstance();
+			sendPublicKey();
+		} catch (NoSuchAlgorithmException e) {
+			responseTxt.setText("Error generating keys");
+		}
 	}
 
 	@Override
@@ -89,6 +95,33 @@ public class MainActivity<T> extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	private void sendPublicKey() {
+		
+		try {
+			api.sendPublicKey(getApplicationContext(), new AsyncHttpResponseHandler() {
+				public void onSuccess(String response) {
+					responseTxt.setText(response);
+				}
+				
+				public void onFailure(Throwable e) {
+					responseTxt.setText(e.getMessage());
+				}
+			});
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
