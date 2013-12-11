@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
@@ -33,7 +34,7 @@ public class MainActivity<T> extends Activity {
 	private TextView responseTxt;
 	private MobileCashServerAPI api;
 	
-	private void buyProduct() throws IOException, JSONException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+	private void buyProduct() throws IOException, JSONException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, SignatureException {
 		
 		String username = userName.getText().toString();
 		String password = passwd.getText().toString();

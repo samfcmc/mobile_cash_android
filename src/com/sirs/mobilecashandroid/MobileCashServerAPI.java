@@ -9,6 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -59,7 +61,7 @@ public class MobileCashServerAPI {
 		return url + publicKeyEndpoint + "/";
 	}
 	
-	public void buy(Context context, String username, String password, String product, AsyncHttpResponseHandler responseHandler) throws JSONException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+	public void buy(Context context, String username, String password, String product, AsyncHttpResponseHandler responseHandler) throws JSONException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, SignatureException {
 		JSONObject jsonParams = new JSONObject();
 		DateTime time = new DateTime();
 
@@ -70,9 +72,9 @@ public class MobileCashServerAPI {
         
         String message = jsonParams.toString();
         
-        String hashed = hash(message);
+        //String hashed = hash(message);
         
-        String signedHash = cipher(hashed);
+        String signedHash = sign(message);
                 
         //Add the hash
         jsonParams.put("hash", signedHash);
@@ -111,13 +113,19 @@ public class MobileCashServerAPI {
 		//Log.d("private key", new String(privateKey.getEncoded()));
 	}
 	
-	public String cipher(String plainText) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+	private String sign(String plainText) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, SignatureException {
+		/*Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.ENCRYPT_MODE, privateKey);
 		byte[] cipheredBytes = cipher.doFinal(plainText.getBytes());
 		String cipheredString = Base64.encodeToString(cipheredBytes, Base64.NO_WRAP);
+		*/
 		
-		return cipheredString;
+		Signature signer = Signature.getInstance("SHA1withRSA");
+		signer.initSign(privateKey);
+		signer.update(plainText.getBytes());
+		byte[] signatureBytes = signer.sign();
+		String signatureString = Base64.encodeToString(signatureBytes, Base64.NO_WRAP);
+		return signatureString;
 	}
 	
 	public void sendPublicKey(Context context, AsyncHttpResponseHandler responseHandler) throws JSONException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException {
