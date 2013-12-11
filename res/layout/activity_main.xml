@@ -14,14 +14,6 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/submit_button" />
-
     <EditText
         android:id="@+id/userName"
         android:layout_width="wrap_content"
@@ -43,7 +35,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="@string/password_hint" >        
+        android:hint="@string/password_hint">        
     </EditText>
 
     <EditText
@@ -53,6 +45,15 @@
         android:layout_above="@+id/submit_button"
         android:layout_alignLeft="@+id/passwd"
         android:ems="10"
-        android:hint="@string/product_hint" />
+        android:hint="@string/product_hint"
+        android:layout_below="@+id/passwd" />
 
+    
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/submit_button"/>
 </RelativeLayout>
