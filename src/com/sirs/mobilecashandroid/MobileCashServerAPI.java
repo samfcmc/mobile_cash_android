@@ -127,7 +127,6 @@ public class MobileCashServerAPI {
 
         Log.d("Send request", message);
 
-        //String hashed = hash(message);
         String toSign = username + password + product + time.getMillis();
 
         Log.d("Message to sign", toSign);
@@ -227,7 +226,6 @@ public class MobileCashServerAPI {
     public void printTime(DateTime time) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         String timeString = formatter.print(time);
-
         Log.d("Current time", timeString);
     }
 }
