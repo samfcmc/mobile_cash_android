@@ -21,6 +21,8 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.apache.http.entity.StringEntity;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,20 +74,27 @@ public class MobileCashServerAPI {
         
         String message = jsonParams.toString();
         
-        //String hashed = hash(message);
+        Log.d("Send request", message);
         
-        String signedHash = sign(message);
+        //String hashed = hash(message);
+        String toSign = username+password+product+time.getMillis();
+        
+        Log.d("Message to sign", toSign);
+        
+        String signedHash = sign(toSign);
                 
         //Add the hash
         jsonParams.put("hash", signedHash);
         
         message = jsonParams.toString();	
         
-        Log.d("message", message);
+        Log.d("message with hash", message);
         
         StringEntity entity = new StringEntity(jsonParams.toString());
         
         String url = getBuyURL();
+        
+        printTime(time);
         
         client.post(context, url, entity, "application/json", responseHandler);       
 	}
@@ -148,5 +157,12 @@ public class MobileCashServerAPI {
 
 		client.post(context, url, entity, "application/json", responseHandler);
 
+	}
+	
+	public void printTime(DateTime time) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+		String timeString = formatter.print(time);
+		
+		Log.d("Current time", timeString);
 	}
 }

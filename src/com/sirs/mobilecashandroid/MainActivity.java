@@ -40,6 +40,7 @@ public class MainActivity<T> extends Activity {
 		String password = passwd.getText().toString();
 		String productCode = product.getText().toString();
         
+		
         api.buy(getApplicationContext(), username, password, productCode, new AsyncHttpResponseHandler() {
         	public void onSuccess(String response) {
         		responseTxt.setText(response);
