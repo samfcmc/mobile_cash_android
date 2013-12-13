@@ -143,9 +143,6 @@ public class MobileCashServerAPI {
             UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException {
         JSONObject jsonParams = new JSONObject();
 
-        KeyFactory fact = KeyFactory.getInstance("RSA");
-        X509EncodedKeySpec spec = fact.getKeySpec(publicKey, X509EncodedKeySpec.class);
-
         byte[] keyBytes = publicKey.getEncoded();
 
         String keyString = Base64.encodeToString(keyBytes, Base64.NO_WRAP);
